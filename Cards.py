@@ -4,5 +4,5 @@ class Card:
         self.suit = suit
 
     def _repr_(self):
-        return     f"{self.rank}"
+        return f"{self.rank} of {self.suit}"
     
