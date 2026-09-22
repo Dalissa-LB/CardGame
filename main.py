@@ -2,6 +2,8 @@
 # Helper Functions and Imports
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
 from Deck import Deck
+from players import CompBlackjackPlayer
+from Cards import Card
 
 
 
@@ -10,7 +12,13 @@ from Deck import Deck
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
 def main():
     testDeck = Deck()
-    print(testDeck.draw())
+    player = CompBlackjackPlayer("Andy")
+
+    player.drawCard(testDeck.draw())
+    player.drawCard(testDeck.draw())
+
+    print("")
+    print("")
 
 
 
