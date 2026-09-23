@@ -4,6 +4,8 @@
 from Deck import Deck
 from players import CompBlackjackPlayer
 from Cards import Card
+from manager import BlackjackManager
+
 
 
 
@@ -11,15 +13,32 @@ from Cards import Card
 # Main Funtion Definition
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
 def main():
-    testDeck = Deck()
-    player = CompBlackjackPlayer("Andy")
+    appOn = True
+    blackjack = BlackjackManager()
 
-    player.drawCard(testDeck.draw())
-    player.drawCard(testDeck.draw())
+    while appOn:
+        print("")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("")
+        print("           Game Menu")
+        print("")
+        print("           1. Blackjack")
+        print("")
+        print("           Q --> Quit")
+        print("")
+        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("")
+        playerChoice = input("---->")
 
-    print("")
-    print("")
-
+        if playerChoice == "1":
+            print("")
+            print("What is your name?")
+            playerName = input("---->")
+            blackjack.playGame()
+        elif playerChoice == "Q":
+            appOn = False
+        else:
+            print("Invalid option!")
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~

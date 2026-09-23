@@ -57,8 +57,8 @@ def showHand(self):
         aces = 0
         for card in self.hand[handNum]:
             rawScore += self.CARDVALUES[card.rank]
-            if card.rank == "Ace"
-            aces +=1
+            if card.rank == "Ace":
+                aces +=1
 
         while rawScore > 21 and aces > 0:
             rawScore -= 10
@@ -96,6 +96,11 @@ class HumBlackjackPlayer(CompBlackjackPlayer):
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print("")
 
-    def makeChoice(self):
-        return input("---->")
+    def makeChoice(self, handNum=1):
+        self.calcScore(handNum)
+        if self.score[handNum] >= 21:
+            return "stay"
+        else:
+
+            return input("---->")
     
