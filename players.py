@@ -36,7 +36,7 @@ def drawCard(self, toGet, handNum=1):
 def discardCard(self, idx=0, handNum=1):
     return self.hand[handNum].pop(idx)
 
-def showHand(self):
+def showHand(self, handNum=1):
     print("")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("")

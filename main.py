@@ -31,10 +31,9 @@ def main():
         playerChoice = input("---->")
 
         if playerChoice == "1":
-            print("")
-            print("What is your name?")
-            playerName = input("---->")
-            blackjack.playGame()
+            playingBlackjack = True
+            while playingBlackjack:
+                playingBlackjack = blackjack.playGame()
         elif playerChoice == "Q":
             appOn = False
         else:

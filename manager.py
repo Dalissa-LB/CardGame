@@ -52,24 +52,98 @@ def resetGame(self, playerName):
               
 
 def determineWinner(self):
-     pass    
+     # Look through all our scores and find the highest score not over 21
+     # Log all players with that score
+     # If there's only one player with score, they win
+     # If multiple have high score:
+     # If one of those players is the dealer, the dealer wins
+     # Otherwise all players with the high score win
+     # One winner, two winners, 3+ winners
+     highScore = 0
+     for player in self.players:
+          for handNum in player.scores.keys():
+               if player.scores[handNum] > highScore and player.scores[handNum] < 22:
+                    highScore = player.scores[handNum]
+
+     winners = []
+
+     for player in self.players:
+          for handNum in player.scores.keys():
+               if player.scores[handNum] == highScore:
+                    if player not in winners:
+                         winners.append(player)
+
+
+     if len(winners) == 1:
+          # Only one winner
+          print("")
+          print(f"{winners[0]} won with a score of {highScore}!")
+     elif len(winners) == 0:
+          print("")
+          print("Everyone busted - Nobody wins")
+     else:
+          if self.dealer in winners:
+               print("")
+               print(f"The dealer wins with a score of {highScore} - better luck next time!")
+          else:
+               if len(winners) == 2:
+                    print("")
+                    print(f"{winners[0]} and {winners[1]} win with a score of {highScore}!")
+               else:
+                    # More than two winners
+                    message = ""
+                    for idx in range(len(winners)):
+                         if  idx == 0:
+                              message += f"{winners[idx]}"
+                         elif idx == len(winners) - 1:
+                              message += f" and {winners[idx]} win with a score of {highScore}!"
+                         else:
+                              message += f",{winners[idx]}"
+                    print("")
+                    print(message)
+
+
 
 def promptNextGame(self):
-     pass
+     validChoice = False
+     while not validChoice:
+          print("")
+          print("Would you like to play another game of blackjack? (y/n)")
+          playerChoice = input("--->").lower()
+
+          if playerChoice in ["y", "yes"]:
+               nextGame = True
+               validChoice = True
+          elif playerChoice in ["n", "no", "quit", "exit", "return"]:
+               nextGame = False
+               validChoice = True
+
 
 def manageTurn(self, player):
      takingTurn = True
      handNum = 1
-     while takingTurn:
+
+     while handNum <= len(player.hand.keys()):
 
           player.showHand(handNum)
+
+          validSplit = (len(player.hand[handNum]) == 2) and (player.hand[handNum][0] == player.hand[handNum][1])
           choice = player.makeChoice(handNum)
-          if choice == "split":
-               pass
+
+          if choice == "split" and validSplit:
+               # Implement the split
+               splitCard = player.hand[handNum].pop()
+               newHand = [splitCard]
+               player.hand[handNum + 1] = newHand
+               player.draw.card(self.deck.draw(), handNum)
+               player.draw.card(self.deck.draw(), handNum +1)
+
+          elif choice == "split" and not validSplit:
+               print("You Shall Not Split!")
           elif choice == "hit":
-               player.drawCard(self.dec.draw(), handNum)
+               player.drawCard(self.deck.draw(), handNum)
           else:
-               takingTurn = False
+               handNum += 1
 
 
 def playGame(self):
@@ -86,3 +160,13 @@ def playGame(self):
 
      for player in self.players:
           self.manageTurn(player)
+
+     for player in self.player:
+          self.manageTurn(player)
+          for hand in player.hand.keys():
+               player.calcScore(hand)
+
+
+     self.determineWnner()
+
+     return self.promptNextGame()
