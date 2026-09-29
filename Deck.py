@@ -1,5 +1,5 @@
 from Cards import Card
-from random import shuffle
+import random
 
 class Deck:
 
@@ -23,6 +23,9 @@ class Deck:
                 newCard = Card(rank, suit)
                 self.drawPile.append(newCard)
 
+        for _ in range(random.randint(5, 7)):
+            self.shuffle()
+
     def draw(self):
         toGive = self.drawPile.pop(0)
         self.outPile.append(toGive)
@@ -32,8 +35,6 @@ class Deck:
         if toDiscard in self.outPile:
             self.outPile.remove(toDiscard)
             self.discardPile.append(toDiscard)
-        else:
-            return self.discardPile
 
     def shuffle(self):
-        shuffle(self.drawPile)
+        random.shuffle(self.drawPile)

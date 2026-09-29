@@ -1,10 +1,10 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Helper Functions and Imports
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
-from Deck import Deck
 from players import CompBlackjackPlayer
 from Cards import Card
 from manager import BlackjackManager
+
 
 
 
@@ -18,15 +18,15 @@ def main():
 
     while appOn:
         print("")
-        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print("")
-        print("           Game Menu")
+        print("                 Game Menu")
         print("")
-        print("           1. Blackjack")
+        print("              1. Blackjack")
         print("")
-        print("           Q --> Quit")
+        print("                Q --> Quit")
         print("")
-        print("~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print("")
         playerChoice = input("---->")
 

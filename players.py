@@ -6,8 +6,8 @@ class CompBlackjackPlayer:
 
     def _init_(self, name):
         self.name = name
-        self.hand = {1, 0}
-        self.score = 0
+        self.hand = {1: []}
+        self.score = {1: 0}
 
     def _repr_(self):
         return self.name    
@@ -17,7 +17,7 @@ class CompBlackjackPlayer:
            return False
        if self.name != other.name:
            return False
-       if len(self.hand) != len(other.hand):
+       if len(self.hand.keys()) != len(other.hand.keys()):
            return False
        else:
            for key in self.hand.keys():
@@ -38,7 +38,7 @@ def discardCard(self, idx=0, handNum=1):
 
 def showHand(self, handNum=1):
     print("")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("")
     print(f"             {self.name.upper()}'s Hand")
     print("")
@@ -49,7 +49,7 @@ def showHand(self, handNum=1):
         for idx in range(1, len(self.hand[handNum])):
             print(f"            {idx + 1} {str(self.hand[handNum][idx])}")
     print("")
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("")
 
     def calcScore(self, handNum=1):
@@ -58,7 +58,7 @@ def showHand(self, handNum=1):
         for card in self.hand[handNum]:
             rawScore += self.CARDVALUES[card.rank]
             if card.rank == "Ace":
-                aces +=1
+                aces += 1
 
         while rawScore > 21 and aces > 0:
             rawScore -= 10
@@ -70,8 +70,10 @@ def showHand(self, handNum=1):
         return self.scores[handNum]
 
     def makeChoice(self,handNum=1):
+        if self.hand[handNum][0] == self.hand[handNum][1]:
+            return "split"
         self.calcScore(handNum)
-        if self.scores[handNum] >= 17:
+        if self.scores[handNum] >= 17 or len(self.hand[handNum]) == 5:
             return "stay"
         else:
             return "hit"
@@ -83,7 +85,7 @@ class HumBlackjackPlayer(CompBlackjackPlayer):
 
     def showHand(self, handNum=1):
         print("")
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print("")
         print(f"             {self.name.upper()}'s Hand")
         print("")
@@ -93,14 +95,13 @@ class HumBlackjackPlayer(CompBlackjackPlayer):
             for idx in range(1, len(self.hand[handNum])):
                 print(f"            {idx + 1}. {str(self.hand[handNum][idx])}")
             print("")
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print("")
 
     def makeChoice(self, handNum=1):
         self.calcScore(handNum)
-        if self.score[handNum] >= 21:
+        if self.score[handNum] >= 21 or len(self.hand[handNum]) == 5:
             return "stay"
         else:
-
-            return input("---->")
+            return input("---->").lower()
     
