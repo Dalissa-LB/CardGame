@@ -26,8 +26,8 @@ class Deck:
         for _ in range(random.randint(5, 7)):
             self.shuffle()
 
-    def draw(self):
-        toGive = self.drawPile.pop(0)
+    def draw(self, drawIdx=0):
+        toGive = self.drawPile.pop(drawIdx)
         self.outPile.append(toGive)
         return toGive
     

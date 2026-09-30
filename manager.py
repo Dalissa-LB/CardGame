@@ -176,3 +176,27 @@ class BlackjackManager:
           self.determineWnner()
 
           return self.promptNextGame()
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# 
+#      
+
+class GoFishManager:
+
+     COMPNAMES =  ["Jacob", "Tiffany", "Zeke", "Bella", "Ezra", "Lelianna", "Damon", "Rosalyn", "John", "Seraphina", "Isen", "Remi"]
+
+     def __init__(self):
+          pass
+
+     def resetGame(self):
+          pass
+
+     def managerTurn(self):
+          pass
+
+     def determineWinner(self):
+          pass
+
+     
