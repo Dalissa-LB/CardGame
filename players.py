@@ -204,12 +204,50 @@ class HumGoFishPlayer(CompGoFishPlayer):
         return choiceIDX
 
     def makeChoice(self, otherPlayers):
-        validChoice = False
-        while not validChoice:
+        validCardChoice = False
+        while not validCardChoice:
             self.showHand()
-            print("")
-            print("")
+            cardChoice = input("---->").lower().capitalize()
+            
+            validCards = []
+            for rank in self.hand.keys():
+                if len(self.hand)[rank] > 0:
+                    validCards.append(rank)
+            
+            if cardChoice in self.hand.keys():
+                validCardChoice = True
+            else:
+                print("You don't have that card! Pick again!")
+            
+
+
+        validplayerChoice = False
+        while not validplayerChoice:
+            print(otherPlayers)
+            print("Choose a player to ask:")
+            playerChoice = input("---->").lower().capitalize()
+
+            if playerChoice in otherPlayers:
+                validPlayerChoice = True
+            else:
+                print(f"There's nobody here named {playerChoice}! Pick again!")
+
+        return [cardChoice, playerChoice]
+
+            
+        print("")
+        print("")
 
     def showHand(self):
-        pass
+        print("")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("")
+        print(f"                   {self.name.upper()}'s Hand")
+        print("")
+        for rank in self.hand.keys():
+            if len(self.hand[rank]) > 0:
+                print(f"               {rank}: {len(self.hand[rank])}")
+        print("")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print("")
 
