@@ -135,6 +135,9 @@ class CompGoFishPlayer:
                      "King":[],
                      "Ace":[]}
         self.sets = {}
+    # Keep these dictionaries between turns.
+        self.request_history = {}
+        self.request_memory = {}
 
     def __repr__(self):
         return self.name
@@ -157,8 +160,64 @@ class CompGoFishPlayer:
         self.hand[cardRank] = []
         return toGive
 
-    def makeChoice(self):
-        pass
+    def makeChoice(self, players):
+        # Find the ranks that the computer currently holds.
+        available_ranks = [
+            rank for rank, cards in self.hand.items()
+            if len(cards) > 0
+        ]
+
+        if not available_ranks:
+            return None, None
+
+        # Remember previous requests and their outcomes.
+        # Prefer ranks that have not been asked for recently.
+        choice = []
+
+        for rank in available_ranks:
+            for player in players:
+                if player == self:
+                    continue
+
+                # Store history using the player's name and rank.
+                previous = self.request_history.get(
+                    (player.name, rank)
+                )
+
+                # Prefer opponents known to have this rank.
+                if previous == "yes":
+                    score = 3
+                elif previous == "no":
+                    score = 0
+                else:
+                    score = 1
+
+                choice.append((score, player, rank))
+
+            if not choice:
+                return None, None
+
+            # Select the highest-scoring available choice.
+            best_score = max(choice[0] for choice in choice)
+
+            best_choice = [
+                choice for choice in best_choice
+                if choice [0] == best_score
+            ]
+
+            _, target_player, chosen_rank = random.choice(best_choice)
+
+            return target_player, chosen_rank
+
+    def rememberRequest(self, player, cardRank, hadCards):
+        result = "yes" if hadCards else "no"
+
+        self.request_history[(player.name, cardRank)] = result
+
+        # Keep a second record of the last known result.
+        self.request_memory.setdefault(player.name, {})
+        self.request_memory[player.name][cardRank] = result
+    
 
     def showMatches(self):
         print("")
